@@ -7,6 +7,7 @@ from billing_tabs.create_bill import CreateBillWindow
 from billing_tabs.bill_history import BillHistoryWindow
 from billing_tabs.inventory import InventoryWindow
 from billing_tabs.admin_settings import AdminSettingsWindow
+from billing_tabs.sales_report import SalesReportWindow
 from billing_tabs.thermal_printer import ThermalPrinter
 
 class HomeDashboard(QMainWindow):
@@ -28,6 +29,7 @@ class HomeDashboard(QMainWindow):
         self.create_bill_window = None
         self.bill_history_window = None
         self.inventory_window = None
+        self.sales_report_window = None
         self.admin_settings_window = None
         
         # Initialize printer instance
@@ -87,6 +89,14 @@ class HomeDashboard(QMainWindow):
         inventory_btn.clicked.connect(self.open_inventory)
         inventory_btn.setStyleSheet("background-color: #9b59b6; color: white; border: none; border-radius: 8px; padding: 20px;")
         buttons_layout.addWidget(inventory_btn)
+
+        # Sales Report Button
+        sales_report_btn = QPushButton("📊 Sales Report")
+        sales_report_btn.setFont(QFont("Poppins", 20, QFont.Bold))
+        sales_report_btn.setMinimumHeight(100)
+        sales_report_btn.clicked.connect(self.open_sales_report)
+        sales_report_btn.setStyleSheet("background-color: #f39c12; color: white; border: none; border-radius: 8px; padding: 20px;")
+        buttons_layout.addWidget(sales_report_btn)
 
         # Settings Button
         settings_btn = QPushButton("⚙️ Settings")
@@ -150,6 +160,14 @@ class HomeDashboard(QMainWindow):
         self.inventory_window.raise_()
         self.inventory_window.activateWindow()
     
+    def open_sales_report(self):
+        """Open Sales Report window"""
+        if self.sales_report_window is None:
+            self.sales_report_window = SalesReportWindow()
+        self.sales_report_window.showMaximized()
+        self.sales_report_window.raise_()
+        self.sales_report_window.activateWindow()
+    
     def open_settings(self):
         """Open admin settings window"""
         if self.admin_settings_window is None:
@@ -175,6 +193,8 @@ class HomeDashboard(QMainWindow):
             self.bill_history_window.close()
         if self.inventory_window:
             self.inventory_window.close()
+        if self.sales_report_window:
+            self.sales_report_window.close()
         if self.admin_settings_window:
             self.admin_settings_window.close()
         
